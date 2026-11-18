@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repaso interactivo · Construye aplicaciones web · 5AV</title>
+<style>
+  :root{--g:#7a1f3d;--g2:#b23a5e;--ok:#1e8e3e;--bad:#c62828;--bg:#f6f1ee;--card:#fff;--tx:#2b2b2b;--mu:#6b6b6b}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--tx);line-height:1.5}
+  header{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;padding:22px 16px;text-align:center}
+  header h1{margin:0;font-size:1.4rem}
+  header p{margin:6px 0 0;opacity:.92;font-size:.95rem}
+  main{max-width:860px;margin:24px auto;padding:0 14px}
+  .card{background:var(--card);border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,.08);padding:24px;margin-bottom:18px}
+  h2{margin-top:0;color:var(--g)}
+  label{display:block;font-weight:600;margin:12px 0 6px}
+  input,select{width:100%;padding:11px;border:1.5px solid #ccc;border-radius:9px;font-size:1rem}
+  button{background:var(--g);color:#fff;border:none;border-radius:9px;padding:12px 22px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:14px}
+  button:hover{background:var(--g2)}
+  button:disabled{background:#aaa;cursor:not-allowed}
+  button.sec{background:#fff;color:var(--g);border:1.5px solid var(--g)}
+  .hidden{display:none !important}
+  .msg{margin-top:14px;padding:12px;border-radius:9px;font-size:.95rem}
+  .msg.ok{background:#e6f4ea;color:#14532d}
+  .msg.bad{background:#fdecea;color:#7f1d1d}
+  .msg.info{background:#e8f0fe;color:#1a3d7c}
+  .err{color:var(--bad);font-size:.92rem;margin-top:8px}
+  .temas{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+  .tema{border:1.5px solid #e2d6d1;border-radius:12px;padding:14px;background:#fffdfc;cursor:pointer;text-align:left;color:var(--tx);margin:0;font-weight:400}
+  .tema:hover{border-color:var(--g2);background:#fbf3f5}
+  .tema .num{font-size:.8rem;color:var(--mu)}
+  .tema .tit{font-weight:700;margin:2px 0 6px}
+  .tema .est{font-size:.85rem}
+  .tema.bloq{opacity:.55;cursor:not-allowed}
+  .tema.hecho{border-color:var(--ok);background:#f2faf4}
+  .barra{height:10px;background:#e5dcd8;border-radius:6px;overflow:hidden;margin:6px 0 4px}
+  .barra div{height:100%;background:var(--g2);width:0;transition:width .4s}
+  .figura{background:#fff;border:1px solid #eee;border-radius:12px;padding:10px;margin:12px 0}
+  .figura svg{width:100%;height:auto;font-family:"Segoe UI",Arial,sans-serif;font-size:14px}
+  pre.code{background:#1e1e2e;color:#e6e6e6;padding:14px;border-radius:10px;overflow-x:auto;font:13.5px/1.55 Consolas,"Courier New",monospace;white-space:pre}
+  .code .k{color:#cba6f7}.code .s{color:#a6e3a1}.code .c{color:#7f849c;font-style:italic}.code .n{color:#fab387}
+  code{background:#f3e7ea;color:#7a1f3d;padding:1px 5px;border-radius:5px;font-size:.92em}
+  .meta{display:flex;justify-content:space-between;font-size:.9rem;color:var(--mu);margin-bottom:10px}
+  .q{font-size:1.1rem;font-weight:600;margin:6px 0 14px}
+  .opt{display:block;width:100%;text-align:left;background:#faf7f6;color:var(--tx);border:1.5px solid #ddd;margin:8px 0 0;font-weight:500}
+  .opt:hover{background:#f3e7ea;border-color:var(--g2)}
+  .opt.ok{background:#e6f4ea;border-color:var(--ok);color:var(--ok)}
+  .opt.bad{background:#fdecea;border-color:var(--bad);color:var(--bad)}
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.93rem}
+  th,td{border-bottom:1px solid #eee;padding:8px;text-align:left}
+  th{background:#f3e7ea;color:var(--g)}
+  .big{font-size:3rem;font-weight:800;color:var(--g);text-align:center;margin:6px 0}
+  .center{text-align:center}
+  footer{text-align:center;font-size:.8rem;color:#888;padding:18px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Repaso interactivo · Construye aplicaciones web</h1>
+  <p>CBTis No. 187 · Técnico en Programación · Grupo 5AV · Actividades 21 a 30</p>
+</header>
+
+<main>
+  <!-- LOGIN -->
+  <section id="vLogin" class="card">
+    <h2>Inicia sesión con tu correo institucional</h2>
+    <p>Solo se permite entrar con tu cuenta <b>@cbtis187.edu.mx</b>. Después elige tu nombre de la lista del grupo.</p>
+    <p>Hay <b>10 temas</b>. En cada uno lees la teoría y contestas su formulario de 5 preguntas, con <b>3 intentos por pregunta</b> (10, 6 o 3 puntos). Los temas se desbloquean en orden. Al terminar, envías tus resultados al docente <b>una sola vez</b> y descargas tu constancia.</p>
+    <div id="btnGoogle" style="display:flex;justify-content:center;margin:18px 0"></div>
+    <div id="pasoAlumno" class="hidden">
+      <div class="msg ok" id="sesion"></div>
+      <label for="alumnoSel">Selecciona tu nombre</label>
+      <select id="alumnoSel"><option value="">— Elige tu nombre —</option></select>
+      <label>Número de control</label>
+      <input id="control" readonly placeholder="Se llena automáticamente">
+      <button id="btnEntrar">Entrar al repaso</button>
+    </div>
+    <div id="errReg" class="err"></div>
+  </section>
+
+  <!-- TABLERO -->
+  <section id="vTablero" class="card hidden">
+    <h2 id="saludo"></h2>
+    <div class="barra"><div id="avance"></div></div>
+    <p id="avanceTxt" style="font-size:.9rem;color:var(--mu);margin-top:0"></p>
+    <div id="listaTemas" class="temas"></div>
+    <div id="cajaFinal" class="hidden" style="margin-top:20px">
+      <div class="msg info">¡Terminaste los 10 temas! Revisa tu resumen y envía tus resultados.</div>
+      <button id="btnResumen">Ver resumen y enviar ➜</button>
+    </div>
+  </section>
+
+  <!-- TEORÍA -->
+  <section id="vTeoria" class="card hidden">
+    <div class="meta"><span id="tNum"></span><a href="#" id="volver1">← Volver a los temas</a></div>
+    <h2 id="tTitulo"></h2>
+    <div id="tFigura" class="figura"></div>
+    <div id="tTexto"></div>
+    <button id="btnFormulario">Ya estudié: ir al formulario ➜</button>
+  </section>
+
+  <!-- FORMULARIO -->
+  <section id="vForm" class="card hidden">
+    <div class="meta"><span id="fTema"></span><span id="fPuntos"></span></div>
+    <div class="barra"><div id="fProg"></div></div>
+    <div class="meta"><span id="fNum"></span><a href="#" id="verTeoria">Repasar la teoría</a></div>
+    <div id="fPregunta" class="q"></div>
+    <pre id="fCodigo" class="code hidden"></pre>
+    <div id="fOpciones"></div>
+    <div id="fRetro" class="msg hidden"></div>
+    <button id="btnSig" class="hidden">Siguiente ➜</button>
+  </section>
+
+  <!-- RESULTADO DEL TEMA -->
+  <section id="vFinTema" class="card hidden center">
+    <h2 id="ftTitulo"></h2>
+    <div class="big" id="ftCalif"></div>
+    <p id="ftDetalle"></p>
+    <button id="btnContinuar">Continuar ➜</button>
+  </section>
+
+  <!-- RESUMEN -->
+  <section id="vResumen" class="card hidden">
+    <h2>Resumen de tus resultados</h2>
+    <p id="rNombre"></p>
+    <div class="big" id="rCalif"></div>
+    <table><thead><tr><th>#</th><th>Tema</th><th>1er intento</th><th>Puntos</th><th>Calif.</th></tr></thead><tbody id="rTabla"></tbody></table>
+    <div class="center">
+      <button id="btnEnviar">📤 Enviar resultados al docente</button>
+      <div id="estadoEnvio" class="msg hidden"></div>
+      <div id="reLogin" class="hidden" style="display:flex;justify-content:center;margin-top:12px"></div>
+      <button id="btnConstancia" class="hidden">🎓 Descargar constancia</button>
+      <br><button id="volver2" class="sec">← Volver a los temas</button>
+    </div>
+  </section>
+</main>
+
+<footer>Docente: M.T.I. Félix Tolentino Cruz · CBTis No. 187 · <a href="https://tolecruz.github.io/cuestionario-fst-5av/privacidad.html">Aviso de privacidad</a></footer>
+<canvas id="lienzo" width="1700" height="2200" class="hidden"></canvas>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+/* ====== CONFIGURACIÓN ====== */
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwESfomzH9RB6acOZHr3JVzGCj1Uk-MXD7eDy3RclJDt01JahZfTdk8CZQL5g3Lm-wh/exec";
+const CLIENT_ID = "356721029050-m5ckg3gftddarim9hhsspmt4sooh3kmo.apps.googleusercontent.com";
+const DOMINIO = "cbtis187.edu.mx";
+const MATERIA = "Submódulo 1: Construye aplicaciones web";
+const DOCENTE = "M.T.I. Félix Tolentino Cruz";
+const ACTIVIDAD = "Repaso interactivo: Actividades 21 a 30";
+const PUNTOS_INTENTO = [10, 6, 3];
+
+const SVG = {
+  promesa: `<svg viewBox="0 0 560 170" role="img" aria-label="Estados de una promesa"><defs><marker id="fl" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#555"/></marker></defs>
+<rect x="10" y="60" width="150" height="50" rx="12" fill="#fff4cc" stroke="#d4a017"/><text x="85" y="82" text-anchor="middle" font-weight="700">pending</text><text x="85" y="100" text-anchor="middle" font-size="12">pendiente</text>
+<rect x="330" y="8" width="220" height="56" rx="12" fill="#e6f4ea" stroke="#1e8e3e"/><text x="440" y="31" text-anchor="middle" font-weight="700">fulfilled · resolve()</text><text x="440" y="51" text-anchor="middle" font-size="12">lo recibe .then()</text>
+<rect x="330" y="106" width="220" height="56" rx="12" fill="#fdecea" stroke="#c62828"/><text x="440" y="129" text-anchor="middle" font-weight="700">rejected · reject()</text><text x="440" y="149" text-anchor="middle" font-size="12">lo recibe .catch()</text>
+<path d="M160,78 L328,40" stroke="#555" stroke-width="2" marker-end="url(#fl)"/><path d="M160,92 L328,130" stroke="#555" stroke-width="2" marker-end="url(#fl)"/>
+<text x="240" y="92" text-anchor="middle" font-size="12" fill="#555">.finally() corre en ambos casos</text></svg>`,
+  fetch: `<svg viewBox="0 0 600 150" role="img" aria-label="Flujo de fetch"><defs><marker id="fl2" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#555"/></marker></defs>
+<rect x="5" y="45" width="120" height="60" rx="10" fill="#e8f0fe" stroke="#1a73e8"/><text x="65" y="72" text-anchor="middle" font-weight="700">Página</text><text x="65" y="90" text-anchor="middle" font-size="12">fetch(url)</text>
+<rect x="240" y="45" width="120" height="60" rx="10" fill="#fff4cc" stroke="#d4a017"/><text x="300" y="72" text-anchor="middle" font-weight="700">API REST</text><text x="300" y="90" text-anchor="middle" font-size="12">/posts</text>
+<rect x="475" y="45" width="120" height="60" rx="10" fill="#e6f4ea" stroke="#1e8e3e"/><text x="535" y="72" text-anchor="middle" font-weight="700">Datos JS</text><text x="535" y="90" text-anchor="middle" font-size="12">r.json()</text>
+<path d="M125,65 L238,65" stroke="#555" stroke-width="2" marker-end="url(#fl2)"/><text x="182" y="57" text-anchor="middle" font-size="11">GET / POST</text>
+<path d="M360,85 L473,85" stroke="#555" stroke-width="2" marker-end="url(#fl2)"/><text x="417" y="104" text-anchor="middle" font-size="11">Response 200</text>
+<text x="300" y="138" text-anchor="middle" font-size="12" fill="#555">Sin recargar la página = AJAX</text></svg>`,
+  modulos: `<svg viewBox="0 0 600 150" role="img" aria-label="Módulos"><defs><marker id="fl3" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#555"/></marker></defs>
+<rect x="10" y="10" width="170" height="55" rx="10" fill="#fff4cc" stroke="#d4a017"/><text x="95" y="33" text-anchor="middle" font-weight="700">16-boletas.js</text><text x="95" y="51" text-anchor="middle" font-size="12">datos · export</text>
+<rect x="10" y="85" width="170" height="55" rx="10" fill="#e8f0fe" stroke="#1a73e8"/><text x="95" y="108" text-anchor="middle" font-weight="700">15-pantalla.js</text><text x="95" y="126" text-anchor="middle" font-size="12">tabla · import</text>
+<rect x="410" y="45" width="180" height="60" rx="10" fill="#e6f4ea" stroke="#1e8e3e"/><text x="500" y="70" text-anchor="middle" font-weight="700">principal (main)</text><text x="500" y="88" text-anchor="middle" font-size="12">import boletas, {...}</text>
+<path d="M180,37 L408,65" stroke="#555" stroke-width="2" marker-end="url(#fl3)"/><path d="M180,112 L408,85" stroke="#555" stroke-width="2" marker-end="url(#fl3)"/><path d="M95,65 L95,83" stroke="#555" stroke-width="2" marker-end="url(#fl3)"/></svg>`,
+  closure: `<svg viewBox="0 0 560 160" role="img" aria-label="Closure"><rect x="10" y="10" width="540" height="140" rx="14" fill="#f3e7ea" stroke="#7a1f3d"/><text x="30" y="35" font-weight="700">function crearCoche()  ← función externa</text><text x="30" y="58" font-size="13">let _velocidad = 0;   (dato privado)</text>
+<rect x="40" y="72" width="490" height="65" rx="10" fill="#fff" stroke="#b23a5e"/><text x="58" y="96" font-weight="700">acelerar()  ← función interna</text><text x="58" y="120" font-size="13">recuerda _velocidad aunque crearCoche() ya terminó</text></svg>`,
+  clase: `<svg viewBox="0 0 600 170" role="img" aria-label="Clase y objetos"><defs><marker id="fl4" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#555"/></marker></defs>
+<rect x="10" y="40" width="170" height="90" rx="12" fill="#e8f0fe" stroke="#1a73e8"/><text x="95" y="68" text-anchor="middle" font-weight="700">class Coche</text><text x="95" y="90" text-anchor="middle" font-size="12">marca, modelo</text><text x="95" y="108" text-anchor="middle" font-size="12">acelerar()</text>
+<rect x="390" y="8" width="200" height="40" rx="10" fill="#e6f4ea" stroke="#1e8e3e"/><text x="490" y="33" text-anchor="middle">new Coche("Nissan")</text>
+<rect x="390" y="65" width="200" height="40" rx="10" fill="#e6f4ea" stroke="#1e8e3e"/><text x="490" y="90" text-anchor="middle">new Coche("Mazda")</text>
+<rect x="390" y="122" width="200" height="40" rx="10" fill="#e6f4ea" stroke="#1e8e3e"/><text x="490" y="147" text-anchor="middle">new Coche("Ford")</text>
+<path d="M180,70 L388,28" stroke="#555" stroke-width="2" marker-end="url(#fl4)"/><path d="M180,85 L388,85" stroke="#555" stroke-width="2" marker-end="url(#fl4)"/><path d="M180,100 L388,140" stroke="#555" stroke-width="2" marker-end="url(#fl4)"/>
+<text x="285" y="165" text-anchor="middle" font-size="12" fill="#555">molde → objetos</text></svg>`,
+  setmap: `<svg viewBox="0 0 600 160" role="img" aria-label="Array, Set y Map"><rect x="5" y="10" width="180" height="140" rx="12" fill="#fff4cc" stroke="#d4a017"/><text x="95" y="35" text-anchor="middle" font-weight="700">Array</text><text x="95" y="62" text-anchor="middle" font-size="13">[0] "Ana"</text><text x="95" y="84" text-anchor="middle" font-size="13">[1] "Luis"</text><text x="95" y="106" text-anchor="middle" font-size="13">[2] "Ana"  ← repetido</text>
+<rect x="210" y="10" width="180" height="140" rx="12" fill="#e6f4ea" stroke="#1e8e3e"/><text x="300" y="35" text-anchor="middle" font-weight="700">Set</text><text x="300" y="62" text-anchor="middle" font-size="13">"Ana"</text><text x="300" y="84" text-anchor="middle" font-size="13">"Luis"</text><text x="300" y="128" text-anchor="middle" font-size="12">sin repetidos · size = 2</text>
+<rect x="415" y="10" width="180" height="140" rx="12" fill="#e8f0fe" stroke="#1a73e8"/><text x="505" y="35" text-anchor="middle" font-weight="700">Map</text><text x="505" y="62" text-anchor="middle" font-size="13">"0417" → "Ana"</text><text x="505" y="84" text-anchor="middle" font-size="13">"0467" → "Luis"</text><text x="505" y="128" text-anchor="middle" font-size="12">clave única → valor</text></svg>`,
+  dom: `<svg viewBox="0 0 600 150" role="img" aria-label="Métodos de arrays"><rect x="5" y="10" width="140" height="130" rx="10" fill="#fff4cc" stroke="#d4a017"/><text x="75" y="35" text-anchor="middle" font-weight="700">map</text><text x="75" y="62" text-anchor="middle" font-size="12">transforma</text><text x="75" y="80" text-anchor="middle" font-size="12">cada elemento</text><text x="75" y="110" text-anchor="middle" font-size="12">3 → 3</text>
+<rect x="155" y="10" width="140" height="130" rx="10" fill="#e6f4ea" stroke="#1e8e3e"/><text x="225" y="35" text-anchor="middle" font-weight="700">filter</text><text x="225" y="62" text-anchor="middle" font-size="12">se queda con</text><text x="225" y="80" text-anchor="middle" font-size="12">los que cumplen</text><text x="225" y="110" text-anchor="middle" font-size="12">5 → 2</text>
+<rect x="305" y="10" width="140" height="130" rx="10" fill="#e8f0fe" stroke="#1a73e8"/><text x="375" y="35" text-anchor="middle" font-weight="700">find</text><text x="375" y="62" text-anchor="middle" font-size="12">el PRIMERO</text><text x="375" y="80" text-anchor="middle" font-size="12">que cumple</text><text x="375" y="110" text-anchor="middle" font-size="12">o undefined</text>
+<rect x="455" y="10" width="140" height="130" rx="10" fill="#f3e7ea" stroke="#7a1f3d"/><text x="525" y="35" text-anchor="middle" font-weight="700">reduce</text><text x="525" y="62" text-anchor="middle" font-size="12">acumula todo</text><text x="525" y="80" text-anchor="middle" font-size="12">en un valor</text><text x="525" y="110" text-anchor="middle" font-size="12">[1,2,3] → 6</text></svg>`,
+  ts: `<svg viewBox="0 0 600 120" role="img" aria-label="Compilación TypeScript"><defs><marker id="fl5" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#555"/></marker></defs>
+<rect x="5" y="25" width="150" height="70" rx="10" fill="#e8f0fe" stroke="#3178c6"/><text x="80" y="55" text-anchor="middle" font-weight="700">src/app.ts</text><text x="80" y="75" text-anchor="middle" font-size="12">con tipos</text>
+<rect x="225" y="25" width="150" height="70" rx="10" fill="#fff4cc" stroke="#d4a017"/><text x="300" y="55" text-anchor="middle" font-weight="700">tsc</text><text x="300" y="75" text-anchor="middle" font-size="12">compilador</text>
+<rect x="445" y="25" width="150" height="70" rx="10" fill="#e6f4ea" stroke="#1e8e3e"/><text x="520" y="55" text-anchor="middle" font-weight="700">scripts/app.js</text><text x="520" y="75" text-anchor="middle" font-size="12">sin tipos → navegador</text>
+<path d="M155,60 L223,60" stroke="#555" stroke-width="2" marker-end="url(#fl5)"/><path d="M375,60 L443,60" stroke="#555" stroke-width="2" marker-end="url(#fl5)"/></svg>`
+};
+
+const TEMAS = [
+{ id:"promesas", n:"21", titulo:"Promesas en JavaScript", proyecto:"TechStore 187", img:SVG.promesa,
+  teoria:`<p><b>Síncrono</b>: cada instrucción espera a que termine la anterior. <b>Asíncrono</b>: una operación tarda (como <code>setTimeout</code> o pedir datos a un servidor) y el programa sigue sin esperarla.</p>
+<p>Una <b>promesa</b> es un objeto que representa un valor que llegará en el futuro. Tiene tres estados: <b>pending</b> (pendiente), <b>fulfilled</b> (cumplida, con <code>resolve</code>) y <b>rejected</b> (rechazada, con <code>reject</code>).</p>
+<pre class="code">const obtenerProductos = () => new Promise((resolve, reject) => {
+  setTimeout(() => {
+    const ok = true;
+    if (ok) resolve(["Laptop", "Tablet"]);   // cumple
+    else reject(new Error("Sin conexión"));  // rechaza
+  }, 2000);
+});
+
+obtenerProductos()
+  .then(items => console.log(items))        // ["Laptop", "Tablet"]
+  .catch(error => console.log(error.message))
+  .finally(() => console.log("Terminó"));    // siempre</pre>
+<p><b>Encadenamiento</b>: si dentro de un <code>.then()</code> haces <code>return</code> de otra promesa, el siguiente <code>.then()</code> espera a que termine. <b>Promise.all([p1, p2, p3])</b> ejecuta varias promesas en paralelo y entrega un arreglo con los resultados; si una falla, se va al <code>.catch()</code>.</p>`,
+  preguntas:[
+    {p:"¿Cuáles son los tres estados de una promesa?", o:["pending, fulfilled y rejected","start, run y stop","then, catch y finally","true, false y null"], c:0, e:"Empieza en pending; resolve la pasa a fulfilled y reject a rejected."},
+    {p:"¿Qué método recibe el valor que entrega resolve?", code:'obtenerProductos()\n  .________(items => console.log(items));', o:[".then()",".catch()",".finally()",".resolve()"], c:0, e:".then() recibe lo que entrega resolve; .catch() recibe lo de reject."},
+    {p:"¿Cuándo se ejecuta .finally()?", o:["Siempre al terminar, con éxito o con error","Solo si hubo error","Solo si todo salió bien","Nunca, es opcional"], c:0, e:"finally sirve, por ejemplo, para ocultar el mensaje \"Cargando...\" en ambos casos."},
+    {p:"¿Qué muestra la consola si la promesa se rechaza así?", code:'reject(new Error("Sin conexión"));\n...\n.catch(error => console.log(error.message));', o:["Sin conexión","Error","undefined","Promise {<pending>}"], c:0, e:"error.message contiene el texto del error; error.name contiene el tipo (\"Error\")."},
+    {p:"¿Qué entrega Promise.all([p1, p2, p3]) cuando todas se cumplen?", o:["Un arreglo con los tres resultados","Solo el resultado de la más rápida","Solo el primer resultado","Un número con el tiempo total"], c:0, e:"Promise.all corre las promesas en paralelo y entrega un arreglo; si una falla, salta al catch."}
+  ]},
+{ id:"async", n:"22", titulo:"async / await y try...catch", proyecto:"Panel del Cliente", img:"",
+  teoria:`<p><b>async</b> antes de <code>function</code> crea una función asíncrona que <b>siempre devuelve una promesa</b>. <b>await</b> pausa esa función hasta que la promesa se resuelve y entrega su valor. Es <b>azúcar sintáctica</b> de las promesas: hace lo mismo que <code>.then()</code>, pero se lee como código normal.</p>
+<pre class="code">async function cargarPanel() {
+  try {
+    const productos = await obtenerProductos();   // espera 2 s
+    if (productos.length === 0) throw new Error("Vacío");
+    mostrar(productos);
+  } catch (error) {
+    aviso.textContent = error.message;           // solo si hubo error
+  } finally {
+    cargando.hidden = true;                       // siempre
+  }
+}</pre>
+<p><b>Secuencial vs paralelo</b>: dos <code>await</code> seguidos suman sus tiempos (2 s + 2 s = 4 s). Con <code>await Promise.all([a(), b()])</code> inician a la vez y tarda lo de la más lenta (2 s).</p>
+<p>Si escribes <code>await</code> fuera de una función async (en un script normal) aparece un <b>SyntaxError</b> y no se ejecuta ninguna línea del archivo.</p>`,
+  preguntas:[
+    {p:"¿Qué devuelve SIEMPRE una función marcada con async?", o:["Una promesa","Un arreglo","undefined","Un número"], c:0, e:"Aunque hagas return 5, la función async entrega Promise {<fulfilled>: 5}."},
+    {p:"¿Qué pasa si escribes await fuera de una función async (en un script que no es módulo)?", o:["SyntaxError y no se ejecuta ninguna línea del archivo","Funciona igual","Solo muestra una advertencia","Se convierte en .then()"], c:0, e:"Es un error de escritura: el archivo completo no se ejecuta."},
+    {p:"Cada función tarda 2 s. ¿Cuánto tarda este código?", code:'const a = await cargarClientes();\nconst b = await cargarPedidos();', o:["4 segundos","2 segundos","1 segundo","0 segundos"], c:0, e:"Son secuenciales: el segundo inicia cuando termina el primero. Con Promise.all tardaría 2 s."},
+    {p:"¿Qué bloque se ejecuta SOLO si ocurre un error dentro del try?", o:["catch","finally","try","async"], c:0, e:"try prueba el código, catch atiende el error y finally corre siempre."},
+    {p:"¿Para qué sirve throw new Error(\"Vacío\")?", o:["Para lanzar un error propio que salta directo al catch","Para borrar la variable","Para pausar la función","Para reiniciar la página"], c:0, e:"throw interrumpe el flujo normal y manda el control al catch más cercano."}
+  ]},
+{ id:"fetch", n:"23", titulo:"Fetch y API REST", proyecto:"Blog Lab 187", img:SVG.fetch,
+  teoria:`<p><b>AJAX</b> es pedir o enviar datos al servidor <b>sin recargar la página</b>. Una <b>API REST</b> entrega datos por URL; cada dirección es un <b>endpoint</b> (<code>/posts</code>, <code>/users</code>). Los datos viajan en <b>JSON</b>.</p>
+<p>Métodos HTTP: <b>GET</b> (leer), <b>POST</b> (crear), <b>PUT/PATCH</b> (editar) y <b>DELETE</b> (borrar). Códigos: <b>200</b> OK, <b>201</b> Created, <b>404</b> Not Found, <b>500</b> error del servidor.</p>
+<pre class="code">// LEER (GET): dos .then → el Response y luego los datos
+fetch(URL_API + "/posts")
+  .then(r => {
+    if (!r.ok) throw new Error("HTTP " + r.status); // 404
+    return r.json();                               // también es promesa
+  })
+  .then(posts => pintar(posts));
+
+// CREAR (POST)
+fetch(URL_API + "/posts", {
+  method: "POST",
+  headers: { "Content-type": "application/json" },
+  body: JSON.stringify({ title: "Hola", body: "..." })
+});</pre>
+<p><b>fetch</b> solo rechaza la promesa por un error de <b>red</b>; un 404 llega como respuesta normal, por eso se revisa <code>response.ok</code>.</p>`,
+  preguntas:[
+    {p:"¿Qué es AJAX?", o:["Pedir o enviar datos al servidor sin recargar la página","Un lenguaje de estilos","Una base de datos","Un tipo de etiqueta HTML"], c:0, e:"Gracias a AJAX el usuario ve los datos nuevos sin que la página se recargue."},
+    {p:"¿Qué método HTTP se usa para CREAR un registro nuevo?", o:["POST","GET","DELETE","PATCH"], c:0, e:"GET lee, POST crea, PUT/PATCH editan y DELETE borra."},
+    {p:"¿Por qué se necesitan dos .then() para obtener los datos?", code:'fetch(url)\n  .then(r => r.json())\n  .then(datos => console.log(datos));', o:["Porque fetch entrega un Response y r.json() también es una promesa","Porque fetch siempre falla la primera vez","Para hacer dos peticiones","Porque JSON tarda 2 segundos"], c:0, e:"Primero llega el Response (sin leer el cuerpo); json() lee el cuerpo y devuelve otra promesa."},
+    {p:"¿Para qué sirve JSON.stringify(obj) en un POST?", o:["Convierte el objeto de JS en texto JSON para enviarlo en el body","Convierte texto en objeto","Valida el formulario","Cambia el método a GET"], c:0, e:"El body viaja como texto; la cabecera Content-type avisa que es application/json."},
+    {p:"¿Qué significa el código de estado 404?", o:["Not Found: el recurso no existe","OK: todo salió bien","Created: se creó el registro","Error del servidor"], c:0, e:"200 OK, 201 Created, 404 Not Found, 500 error del servidor."}
+  ]},
+{ id:"modulos", n:"24", titulo:"Módulos y CRUD de boletas", proyecto:"CRUD de boletas", img:SVG.modulos,
+  teoria:`<p>Un <b>módulo</b> es un archivo JS con una sola responsabilidad que <b>exporta</b> lo que otros pueden usar. Para usarlos, el HTML carga el script con <code>type="module"</code> y se abre con un servidor (Live Server).</p>
+<pre class="code">// 16-boletas.js
+const alumnos = [];
+export const promedio = (cal) => cal.reduce((a, b) => a + b, 0) / cal.length;
+export default { agregar, listar, editar, eliminar, buscar };
+
+// main.js
+import boletas, { promedio } from "./16-boletas.js";
+boletas.agregar({ id: 1, nombre: "Ana", cal: [9, 8] });</pre>
+<p><b>CRUD</b>: <b>C</b>reate (crear), <b>R</b>ead (leer), <b>U</b>pdate (actualizar) y <b>D</b>elete (eliminar). En esta práctica es <b>simulado</b>: los datos viven en un arreglo en memoria; al recargar se pierden.</p>
+<pre class="code">// Eliminar: buscar la posición y quitarla
+const i = alumnos.findIndex(a => a.id === id);
+alumnos.splice(i, 1);</pre>`,
+  preguntas:[
+    {p:"¿Qué significan las letras de CRUD?", o:["Create, Read, Update, Delete","Copy, Run, Upload, Download","Code, Run, Use, Debug","Create, Run, Undo, Delete"], c:0, e:"Crear, leer, actualizar y eliminar registros."},
+    {p:"¿Por qué decimos que este CRUD es simulado?", o:["Porque los datos viven en un arreglo en memoria y se pierden al recargar","Porque no tiene botones","Porque no usa JavaScript","Porque solo funciona en celular"], c:0, e:"No hay base de datos: todo está en un arreglo mientras la página está abierta."},
+    {p:"¿Cómo importas el default de 16-boletas.js como boletas y la función nombrada promedio?", o:['import boletas, { promedio } from "./16-boletas.js";','import { boletas, promedio } from "./16-boletas.js";','require("16-boletas").promedio;','export boletas, promedio;'], c:0, e:"El default va sin llaves; las exportaciones nombradas van entre llaves."},
+    {p:"¿Qué atributo necesita la etiqueta script para usar import/export?", code:'<script ________ src="js/main.js"><\/script>', o:['type="module"','defer="true"','lang="es6"','async="module"'], c:0, e:"Sin type=\"module\" el navegador marca error al encontrar import."},
+    {p:"¿Qué hacen findIndex y splice en eliminar()?", o:["findIndex da la posición del alumno y splice lo quita del arreglo","findIndex borra y splice busca","Los dos ordenan el arreglo","Crean un alumno nuevo"], c:0, e:"findIndex devuelve el índice (o -1) y splice(i, 1) elimina un elemento en esa posición."}
+  ]},
+{ id:"closures", n:"25", titulo:"Funciones anidadas y closures", proyecto:"Alcancía digital", img:SVG.closure,
+  teoria:`<p>Una <b>función anidada</b> está declarada dentro de otra. La interna ve las variables de la externa, pero desde afuera no se ven las de adentro (<b>ámbito o scope</b>).</p>
+<pre class="code">function mostrarNombre() {
+  const apellidos = "Cruz";
+  function mostrarApellidos() { return apellidos; }
+  return mostrarApellidos;   // devuelve la función, NO la ejecuta
+}
+mostrarNombre()();           // "Cruz" → ()() ejecuta la devuelta
+console.log(apellidos);      // ❌ ReferenceError: fuera de su ámbito</pre>
+<p>Un <b>closure</b> es una función que <b>recuerda</b> las variables del lugar donde fue creada, aunque la función externa ya haya terminado. Sirve para tener <b>datos privados</b>.</p>
+<pre class="code">const coche = (function () {          // IIFE: se ejecuta en ese momento
+  let _velocidad = 0;                  // _ = privado por convención
+  return {
+    acelerar() { _velocidad += 5; },
+    get velocidad() { return _velocidad; }
+  };
+})();</pre>
+<p>Una <b>IIFE</b> crea un solo objeto; una <b>función fábrica</b> como <code>crearCoche()</code> se llama varias veces y cada llamada crea un objeto independiente.</p>`,
+  preguntas:[
+    {p:"¿Qué es un closure?", o:["Una función que recuerda las variables del lugar donde fue creada, aunque la externa ya terminó","Una función que cierra la página","Un error de JavaScript","Una función sin parámetros"], c:0, e:"El closure conserva el acceso a las variables de su función externa."},
+    {p:"Si a() devuelve una función, ¿cómo ejecutas esa función devuelta en una sola línea?", o:["a()()","a.call","a[]","return a"], c:0, e:"El primer () ejecuta a; el segundo () ejecuta la función que a devolvió."},
+    {p:"¿Por qué falla esta línea?", code:'function mostrarNombre() {\n  const apellidos = "Cruz";\n}\nconsole.log(apellidos);', o:["Porque apellidos solo existe en el ámbito de mostrarNombre","Porque falta punto y coma","Porque const no existe","Porque console.log está mal escrito"], c:0, e:"Las variables declaradas dentro de una función no se ven desde afuera."},
+    {p:"¿Para qué sirven los paréntesis finales en (function () { ... })();?", o:["Para ejecutar la función anónima en ese momento (IIFE)","Para comentar el código","Para declarar una clase","No sirven para nada"], c:0, e:"IIFE = Immediately Invoked Function Expression: función que se ejecuta al definirse."},
+    {p:"¿Qué indica el guion bajo en _velocidad?", o:["Que es privada por convención","Que es una constante","Que es un número","Que es global"], c:0, e:"El _ es solo una convención: avisa a otros programadores que no la toquen desde afuera."}
+  ]},
+{ id:"clases", n:"26", titulo:"Clases y POO", proyecto:"Credenciales del CBTis 187", img:SVG.clase,
+  teoria:`<p>La <b>clase</b> es el molde y el <b>objeto</b> es lo que se fabrica con <code>new</code>. El <b>constructor</b> se ejecuta automáticamente con cada <code>new</code>, y <b>this</b> es el objeto con el que se llamó al método.</p>
+<pre class="code">class Coche {
+  #nPuertas = 4;                    // # privado real
+  static ruedas() { return 4; }     // de la CLASE, no del objeto
+  constructor(marca, modelo = "Base") {
+    this.marca = marca;
+    this.modelo = modelo;
+  }
+  get devolverMarca() { return this.marca; }   // getter
+  set cambiarMarca(m) { this.marca = m; }      // setter
+}
+const miCoche = new Coche("Nissan");
+miCoche.devolverMarca;   // "Nissan" → getter SIN paréntesis
+Coche.ruedas();          // ✔  miCoche.ruedas() → ❌</pre>
+<p><b>Herencia</b>: una clase hija se crea con <code>extends</code> y llama al constructor del padre con <code>super()</code>. Hereda propiedades y métodos, y agrega los suyos.</p>
+<pre class="code">class Quad extends Coche {
+  constructor(marca, modelo) { super(marca, modelo); }
+  saltar() { return "¡Salto!"; }
+}</pre>
+<p>Visibilidad: pública (normal), protegida por convención (<code>_</code>) y privada real (<code>#</code>).</p>`,
+  preguntas:[
+    {p:"¿Cuál es la diferencia entre clase y objeto?", o:["La clase es el molde; el objeto es cada caso concreto creado con new","Son lo mismo","El objeto es el molde y la clase el caso concreto","La clase solo guarda números"], c:0, e:"Ejemplo: clase Alumno → objeto \"Ana, 5AV\"."},
+    {p:"¿Cuándo se ejecuta el constructor?", o:["Automáticamente cada vez que se usa new","Solo cuando lo llamas por su nombre","Al cerrar la página","Una sola vez en todo el programa"], c:0, e:"new crea el objeto y ejecuta el constructor para inicializarlo."},
+    {p:"Coche tiene get devolverMarca(). ¿Cómo imprimes la marca?", o:["console.log(miCoche.devolverMarca);","console.log(miCoche.devolverMarca());","console.log(Coche.devolverMarca);","console.log(get.marca);"], c:0, e:"Los getters se usan como propiedad, sin paréntesis."},
+    {p:"¿Por qué miCoche.ruedas() falla si ruedas es static?", o:["Porque los métodos estáticos pertenecen a la clase, no a los objetos","Porque falta new","Porque static es privado","Porque ruedas no devuelve nada"], c:0, e:"Se llama Coche.ruedas(); un ejemplo real de clase con estáticos es Math."},
+    {p:"¿Qué hace super(marca, modelo) en el constructor de Quad?", code:'class Quad extends Coche {\n  constructor(marca, modelo) {\n    super(marca, modelo);\n  }\n}', o:["Llama al constructor de Coche para inicializar las propiedades heredadas","Crea un objeto nuevo de Quad","Borra la clase padre","Convierte el método en estático"], c:0, e:"En una clase hija, super() debe llamarse antes de usar this."}
+  ]},
+{ id:"setmap", n:"27", titulo:"Set, Map, WeakSet y WeakMap", proyecto:"Laboratorio de cómputo", img:SVG.setmap,
+  teoria:`<p><b>Set</b>: lista de valores <b>únicos</b> (como el pase de lista). <b>Map</b>: pares <b>clave → valor</b> (como los casilleros: la etiqueta no se repite). Ambos respetan el orden y se recorren con <code>for...of</code> o <code>forEach</code>; el tamaño se ve con <code>size</code>.</p>
+<pre class="code">const asistencia = new Set();
+asistencia.add("Ana").add("Luis").add("Ana");
+asistencia.size;                     // 2
+const unicos = [...new Set([1, 1, 2, 3, 3])];   // [1, 2, 3]
+
+const equipos = new Map();
+equipos.set("PC-01", "Ana");
+equipos.set("PC-01", "Luis");        // reemplaza: queda una sola clave
+equipos.get("PC-01");                // "Luis"
+equipos.has("PC-01");                // true → has busca CLAVES</pre>
+<p><b>WeakSet</b> y <b>WeakMap</b> solo aceptan <b>objetos</b> (en WeakMap, como claves), no tienen <code>size</code> ni <code>clear</code> y no se pueden recorrer.</p>
+<p>Ojo: <code>{nombre:"Ana"}</code> y otro <code>{nombre:"Ana"}</code> son <b>objetos distintos</b>, aunque tengan los mismos datos.</p>`,
+  preguntas:[
+    {p:"¿Qué diferencia principal hay entre un arreglo y un Set?", o:["El Set no admite valores repetidos y no tiene posiciones","El Set solo guarda números","El arreglo no se puede recorrer","No hay diferencia"], c:0, e:"Por eso un Set es ideal para el pase de lista."},
+    {p:"¿Qué línea quita los repetidos del arreglo nums?", o:["const unicos = [...new Set(nums)];","const unicos = nums.unique();","const unicos = new Map(nums);","const unicos = nums.size;"], c:0, e:"El Set elimina repetidos y el operador ... lo convierte otra vez en arreglo."},
+    {p:"¿Qué queda en el mapa después de estas líneas?", code:'mapa.set("a", 1);\nmapa.set("a", 2);', o:['Una sola entrada "a" con valor 2','Dos entradas "a"','Una entrada "a" con valor 1','Un error'], c:0, e:"Las claves de un Map no se repiten: el segundo set reemplaza el valor."},
+    {p:"¿Con qué propiedad sabes cuántos elementos tiene un Set o un Map?", o:["size","length","count","total"], c:0, e:"Los arreglos usan length; Set y Map usan size."},
+    {p:"¿Qué puede guardar un WeakSet?", o:["Solo objetos","Solo números","Solo texto","Cualquier valor"], c:0, e:"Además, WeakSet no tiene size, clear ni se puede recorrer."}
+  ]},
+{ id:"dom", n:"28", titulo:"DOM y métodos de arrays (página PAEC)", proyecto:"Una página para prevenir", img:SVG.dom,
+  teoria:`<p><b>querySelector</b> devuelve el <b>primer</b> elemento que coincide; <b>querySelectorAll</b> devuelve <b>todos</b> en una <b>NodeList</b>, que se recorre con <code>forEach</code> (no con <code>for...in</code>).</p>
+<pre class="code">const enlaces = document.querySelectorAll("nav a");
+enlaces.forEach(a => a.addEventListener("click", e => {
+  e.preventDefault();                      // evita el salto del enlace
+  secciones.forEach(s => s.classList.add("oculta"));
+  document.querySelector(a.hash).classList.remove("oculta");
+}));</pre>
+<p><b>Métodos de arrays</b>: <code>map</code> transforma cada elemento, <code>filter</code> se queda con los que cumplen, <code>find</code> devuelve el primero que cumple (o <code>undefined</code>) y <code>findIndex</code> su posición (o <code>-1</code>). <code>some</code>: ¿al menos uno cumple? <code>every</code>: ¿todos cumplen? <code>reduce</code> acumula en un solo valor.</p>
+<pre class="code">const total = respuestas.reduce((acum, r) => acum + r.puntos, 0);
+["Alcohol", "Tabaco"].includes("tabaco");    // false: distingue mayúsculas
+const pelicula = { titulo, genero };         // propiedades abreviadas</pre>
+<p>Recuerda: si necesitas ayuda, la <b>Línea de la Vida 800 911 2000</b> atiende gratis las 24 horas.</p>`,
+  preguntas:[
+    {p:"¿Qué diferencia hay entre querySelector y querySelectorAll?", o:["querySelector devuelve el primero; querySelectorAll devuelve todos en una NodeList","Son iguales","querySelectorAll solo busca por id","querySelector devuelve un arreglo"], c:0, e:"Con la NodeList usamos forEach o Array.from para convertirla en arreglo."},
+    {p:"¿Qué devuelve esta línea?", code:'["Alcohol", "Tabaco"].includes("tabaco");', o:["false","true","1","undefined"], c:0, e:"includes distingue mayúsculas de minúsculas: \"tabaco\" ≠ \"Tabaco\"."},
+    {p:"¿Qué devuelve find cuando no encuentra nada?", o:["undefined","-1","null","false"], c:0, e:"find devuelve undefined; findIndex devuelve -1."},
+    {p:"¿Qué diferencia hay entre some y every?", o:["some: al menos uno cumple; every: todos cumplen","some: todos; every: ninguno","Son iguales","some ordena y every filtra"], c:0, e:"Los dos devuelven true o false."},
+    {p:"En reduce, ¿para qué sirve el 0 final?", code:'const total = puntos.reduce((acum, p) => acum + p, 0);', o:["Es el valor inicial del acumulado","Es la posición inicial del arreglo","Indica que no hay elementos","Detiene el recorrido"], c:0, e:"acum empieza en 0 y en cada vuelta se le suma el elemento actual."}
+  ]},
+{ id:"moderno", n:"29", titulo:"JavaScript moderno: ??, ?. y ES2022", proyecto:"Inventario del laboratorio", img:"",
+  teoria:`<p><b>??</b> (fusión nula) usa el valor de la derecha solo si el de la izquierda es <code>null</code> o <code>undefined</code>. <b>||</b> lo usa con cualquier valor falso (0, "", false).</p>
+<pre class="code">0 ?? 5;                         // 0
+0 || 5;                         // 5
+e.responsable?.nombre;          // ?. evita el error si responsable no existe
+const precio = 1_000_000;       // separador numérico: vale 1000000
+"PC 01 A".replaceAll(" ", "-"); // "PC-01-A" (replace solo cambia el primero)
+
+notas  ||= "Sin notas";         // asigna si notas es falso
+estado ??= "Disponible";        // asigna solo si es null/undefined</pre>
+<p><b>Novedades ES2022</b>: <b>top-level await</b> (await fuera de una función, solo en módulos), <code>Object.hasOwn(obj, "prop")</code>, <code>arr.at(-1)</code> (último elemento), <b>campos y métodos privados</b> con <code>#</code> y <code>new Error("msg", { cause })</code> para indicar la causa de un error.</p>
+<pre class="code">[10, 20, 30].at(-1);                       // 30
+throw new Error("No se cargó", { cause: err });</pre>`,
+  preguntas:[
+    {p:"¿Qué devuelven 0 ?? 5 y 0 || 5?", o:["0 y 5","5 y 5","0 y 0","5 y 0"], c:0, e:"?? solo reemplaza null/undefined; || reemplaza cualquier valor falso, como 0."},
+    {p:"¿Qué evita el encadenamiento opcional en e.responsable?.nombre?", o:["El error si responsable es null o undefined: devuelve undefined","Que nombre sea texto","Que la variable cambie","Nada, es solo estilo"], c:0, e:"Sin ?. aparecería TypeError: Cannot read properties of undefined."},
+    {p:"¿Qué devuelve [10, 20, 30].at(-1)?", o:["30","10","-1","undefined"], c:0, e:"at(-1) toma el último elemento contando desde el final."},
+    {p:"¿Qué diferencia hay entre replace y replaceAll?", o:["replace cambia solo la primera coincidencia; replaceAll cambia todas","replaceAll solo funciona con números","Son iguales","replace borra el texto"], c:0, e:"\"a-b-c\".replace(\"-\", \"\") → \"ab-c\"; replaceAll → \"abc\"."},
+    {p:"¿Cuándo asigna valor estado ??= \"Disponible\"?", o:["Solo si estado es null o undefined","Siempre","Solo si estado es 0","Nunca"], c:0, e:"??= es asignación lógica con fusión nula."}
+  ]},
+{ id:"ts", n:"30", titulo:"TypeScript", proyecto:"CineClub 187", img:SVG.ts,
+  teoria:`<p><b>TypeScript</b> es JavaScript con <b>tipos</b>. Escribes <code>.ts</code>, el compilador <b>tsc</b> lo convierte en <code>.js</code> (sin tipos) y ese archivo es el que carga el navegador. Con <code>tsc -w</code> compila solo cada vez que guardas.</p>
+<p>Ventajas: detecta errores <b>antes de ejecutar</b>, da mejores mensajes y autocompletado, y es la base de frameworks como Angular.</p>
+<pre class="code">let titulo: string = "Coco";
+let precioBoleto: number = 15.5;
+let enCartelera: boolean = true;
+let comodin: any = "texto";  comodin = 5;      // any: acepta todo
+let dato: unknown = respuesta;                  // unknown: revisa antes de usar
+let contacto: string | number;                  // unión de tipos
+let generos: string[] = ["Drama", "Comedia"];   // arreglo
+let funcion: [string, number] = ["Coco", 18];   // tupla: orden y tipos fijos
+enum Clasificacion { A, B, C }                  // enum
+const edad = Number(input.value);              // casteo
+titulo = 10;  // ❌ Type 'number' is not assignable to type 'string'</pre>`,
+  preguntas:[
+    {p:"¿Qué hace el compilador tsc?", o:["Convierte archivos .ts en .js sin tipos para el navegador","Ejecuta TypeScript directo en el navegador","Instala Bootstrap","Convierte JS en Java"], c:0, e:"El navegador no entiende TypeScript; por eso se compila a JavaScript."},
+    {p:"¿Qué pasa con esta línea?", code:'let titulo: string = "Coco";\ntitulo = 10;', o:["TypeScript marca error: number no se puede asignar a string","Funciona sin problema","titulo vale \"10\"","Se convierte en any"], c:0, e:"Es la gran ventaja: el error se detecta en el editor antes de ejecutar."},
+    {p:"¿Qué tipo acepta cualquier valor sin que TypeScript se queje?", o:["any","string","never","boolean"], c:0, e:"any desactiva la revisión; unknown también acepta todo pero obliga a revisar antes de usar."},
+    {p:"¿Cómo se declara una TUPLA con un texto y un número, en ese orden?", o:['let f: [string, number] = ["Coco", 18];','let f: string[] = ["Coco", 18];','let f: string | number = "Coco";','let f: any = ("Coco", 18);'], c:0, e:"La tupla fija la cantidad, el orden y el tipo de cada posición."},
+    {p:"¿Qué significa let contacto: string | number?", o:["Unión de tipos: puede ser texto o número","Que es texto Y número a la vez","Un arreglo de textos","Un error de sintaxis"], c:0, e:"El símbolo | indica unión de tipos."}
+  ]}
+];
+
+
+/* ====== ESTADO ====== */
+const $ = id => document.getElementById(id);
+let token = "", correo = "", listaAl = [], alumno = null, enviado = false, califFinalFija = null, folio = "";
+let prog = {};            // { idTema: {puntos, primer, sin, hecho} }
+let temaAct = null, orden = [], idx = 0, intentos = 0, tmp = null, inicio = null;
+
+const clave = () => "repaso5av_" + correo;
+function guardar(){ try{ localStorage.setItem(clave(), JSON.stringify({alumno, prog, inicio})); }catch(e){} }
+function cargar(){ try{ const d = JSON.parse(localStorage.getItem(clave())||"null"); if (d){ alumno=d.alumno; prog=d.prog||{}; inicio=d.inicio; } }catch(e){} }
+
+function vista(id){ ["vLogin","vTablero","vTeoria","vForm","vFinTema","vResumen"].forEach(v=>$(v).classList.toggle("hidden", v!==id)); window.scrollTo(0,0); }
+function barajar(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function jwt(t){ const p=t.split(".")[1].replace(/-/g,"+").replace(/_/g,"/");
+  return JSON.parse(decodeURIComponent(atob(p).split("").map(c=>"%"+("00"+c.charCodeAt(0).toString(16)).slice(-2)).join(""))); }
+
+function resaltar(c){
+  const e = c.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  return e.replace(/(\/\/[^\n]*)|("(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|`[^`]*`)|\b(const|let|var|function|return|async|await|new|class|extends|super|static|get|set|if|else|try|catch|finally|throw|import|export|default|from|this|enum|true|false|null|undefined)\b|\b(\d[\d_.]*)\b/g,
+    (m,com,str,kw,num) => com ? '<span class="c">'+com+'</span>' : str ? '<span class="s">'+str+'</span>' : kw ? '<span class="k">'+kw+'</span>' : '<span class="n">'+num+'</span>');
+}
+
+/* ====== LOGIN ====== */
+async function alIniciarSesion(resp){
+  const info = jwt(resp.credential);
+  if (!String(info.email||"").toLowerCase().endsWith("@"+DOMINIO)){
+    $("errReg").textContent = `Entraste con ${info.email}. Debes usar tu correo institucional @${DOMINIO}.`;
+    return;
+  }
+  if (correo && info.email.toLowerCase() !== correo){ alert("Usa la misma cuenta con la que iniciaste: "+correo); return; }
+  token = resp.credential;
+  if (alumno && $("vResumen").classList.contains("hidden")===false){ $("reLogin").classList.add("hidden"); $("btnEnviar").click(); return; }
+  $("errReg").textContent = "Verificando tu cuenta…";
+  try{
+    const r = await (await fetch(SCRIPT_URL+"?token="+encodeURIComponent(token))).json();
+    if (!r.ok) throw new Error(r.error);
+    correo = r.correo; listaAl = r.alumnos; $("errReg").textContent = "";
+    if (r.yaEnviado){ mostrarYaEnviado(r.yaEnviado); return; }
+    cargar();
+    if (alumno && listaAl.some(x=>x[0]===alumno.control)){ abrirTablero(); return; }
+    $("sesion").textContent = `✅ Sesión iniciada: ${info.name || ""} (${correo})`;
+    const sel = $("alumnoSel");
+    listaAl.forEach(([c,n])=>{ const o=document.createElement("option"); o.value=c; o.textContent=n; sel.appendChild(o); });
+    $("btnGoogle").classList.add("hidden"); $("pasoAlumno").classList.remove("hidden");
+  }catch(e){ $("errReg").textContent = "No se pudo verificar tu cuenta: "+e.message; }
+}
+
+$("alumnoSel").onchange = e => { $("control").value = e.target.value; };
+$("btnEntrar").onclick = () => {
+  const c = $("alumnoSel").value;
+  if (!c){ $("errReg").textContent = "Selecciona tu nombre de la lista."; return; }
+  const n = listaAl.find(x=>x[0]===c)[1];
+  if (!confirm(`¿Confirmas que eres ${n}?`)) return;
+  alumno = {nombre:n, control:c, grupo:"5AV"}; inicio = Date.now(); prog = {};
+  guardar(); abrirTablero();
+};
+
+/* ====== TABLERO ====== */
+function calTema(id){ const p = prog[id]; return p ? Math.round(p.puntos/(5*PUNTOS_INTENTO[0])*100)/10 : 0; }
+function abrirTablero(){
+  vista("vTablero");
+  $("saludo").textContent = "Hola, " + alumno.nombre;
+  const hechos = TEMAS.filter(t=>prog[t.id]?.hecho).length;
+  $("avance").style.width = (hechos/TEMAS.length*100)+"%";
+  $("avanceTxt").textContent = `${hechos} de ${TEMAS.length} temas completados`;
+  const cont = $("listaTemas"); cont.innerHTML = "";
+  TEMAS.forEach((t,i)=>{
+    const hecho = prog[t.id]?.hecho, disp = i===0 || prog[TEMAS[i-1].id]?.hecho;
+    const b = document.createElement("button");
+    b.className = "tema" + (hecho?" hecho":"") + (!disp?" bloq":"");
+    b.innerHTML = `<div class="num">Actividad ${t.n} · ${t.proyecto}</div><div class="tit">${i+1}. ${t.titulo}</div>
+      <div class="est">${hecho ? "✅ Completado · Calificación "+calTema(t.id).toFixed(1) : disp ? "📖 Disponible" : "🔒 Termina el tema anterior"}</div>`;
+    b.onclick = () => { if (disp && !hecho) abrirTeoria(t); else if (hecho) abrirTeoria(t, true); };
+    cont.appendChild(b);
+  });
+  $("cajaFinal").classList.toggle("hidden", hechos < TEMAS.length);
+}
+$("btnResumen").onclick = abrirResumen;
+$("volver1").onclick = e => { e.preventDefault(); abrirTablero(); };
+$("volver2").onclick = () => abrirTablero();
+
+/* ====== TEORÍA ====== */
+function abrirTeoria(t, soloLeer){
+  temaAct = t; vista("vTeoria");
+  $("tNum").textContent = `Tema ${TEMAS.indexOf(t)+1} de ${TEMAS.length} · Actividad ${t.n} · ${t.proyecto}`;
+  $("tTitulo").textContent = t.titulo;
+  $("tFigura").innerHTML = t.img; $("tFigura").classList.toggle("hidden", !t.img);
+  $("tTexto").innerHTML = t.teoria;
+  $("tTexto").querySelectorAll("pre.code").forEach(p => p.innerHTML = resaltar(p.textContent));
+  $("btnFormulario").classList.toggle("hidden", !!soloLeer);
+}
+$("btnFormulario").onclick = () => abrirFormulario(temaAct);
+$("verTeoria").onclick = e => { e.preventDefault(); vista("vTeoria"); $("btnFormulario").textContent = "Volver al formulario ➜"; $("btnFormulario").onclick = () => vista("vForm"); };
+
+/* ====== FORMULARIO ====== */
+function abrirFormulario(t){
+  $("btnFormulario").textContent = "Ya estudié: ir al formulario ➜"; $("btnFormulario").onclick = () => abrirFormulario(temaAct);
+  orden = barajar(t.preguntas.map((_,i)=>i)); idx = 0; tmp = {puntos:0, primer:0, sin:0};
+  $("fTema").textContent = t.titulo; vista("vForm"); mostrarPregunta();
+}
+function mostrarPregunta(){
+  intentos = 0;
+  const q = temaAct.preguntas[orden[idx]];
+  $("fNum").textContent = `Pregunta ${idx+1} de ${temaAct.preguntas.length}`;
+  $("fPuntos").textContent = `Puntos: ${tmp.puntos}`;
+  $("fProg").style.width = (idx/temaAct.preguntas.length*100)+"%";
+  $("fPregunta").textContent = q.p;
+  if (q.code){ $("fCodigo").innerHTML = resaltar(q.code); $("fCodigo").classList.remove("hidden"); } else $("fCodigo").classList.add("hidden");
+  $("fRetro").className = "msg hidden"; $("btnSig").classList.add("hidden");
+  const cont = $("fOpciones"); cont.innerHTML = "";
+  barajar(q.o.map((t,i)=>({t,i}))).forEach(op=>{
+    const b = document.createElement("button");
+    b.className = "opt"; b.textContent = op.t; b.dataset.i = op.i;
+    b.onclick = () => responder(b, op.i, q);
+    cont.appendChild(b);
+  });
+}
+function responder(btn, i, q){
+  intentos++;
+  const ult = idx === temaAct.preguntas.length-1;
+  if (i === q.c){
+    const pts = PUNTOS_INTENTO[intentos-1];
+    tmp.puntos += pts; if (intentos===1) tmp.primer++;
+    btn.classList.add("ok"); document.querySelectorAll(".opt").forEach(b=>b.disabled=true);
+    $("fRetro").className = "msg ok"; $("fRetro").innerHTML = `✅ ¡Correcto! +${pts} puntos.<br>${q.e}`;
+    $("fPuntos").textContent = `Puntos: ${tmp.puntos}`;
+    $("btnSig").textContent = ult ? "Terminar tema ➜" : "Siguiente ➜"; $("btnSig").classList.remove("hidden");
+  } else {
+    btn.classList.add("bad"); btn.disabled = true;
+    const quedan = PUNTOS_INTENTO.length - intentos;
+    if (quedan > 0){
+      $("fRetro").className = "msg bad";
+      $("fRetro").textContent = `❌ Esa no es la respuesta. Te ${quedan===1?"queda 1 intento":"quedan "+quedan+" intentos"}.`;
+    } else {
+      tmp.sin++;
+      document.querySelectorAll(".opt").forEach(b=>{ b.disabled=true; if (b.dataset.i==q.c) b.classList.add("ok"); });
+      $("fRetro").className = "msg bad";
+      $("fRetro").innerHTML = `❌ Se agotaron tus 3 intentos (0 puntos). La respuesta correcta está en verde.<br>${q.e}`;
+      $("btnSig").textContent = ult ? "Terminar tema ➜" : "Siguiente ➜"; $("btnSig").classList.remove("hidden");
+    }
+  }
+}
+$("btnSig").onclick = () => {
+  idx++;
+  if (idx < temaAct.preguntas.length) return mostrarPregunta();
+  prog[temaAct.id] = {...tmp, hecho:true}; guardar();
+  vista("vFinTema");
+  $("ftTitulo").textContent = "Terminaste: " + temaAct.titulo;
+  $("ftCalif").textContent = calTema(temaAct.id).toFixed(1);
+  $("ftDetalle").textContent = `${tmp.puntos} de 50 puntos · ${tmp.primer} de 5 al primer intento`;
+};
+$("btnContinuar").onclick = abrirTablero;
+
+/* ====== RESUMEN, ENVÍO Y CONSTANCIA ====== */
+function puntosTot(){ return TEMAS.reduce((a,t)=>a+(prog[t.id]?.puntos||0),0); }
+function califFinal(){ if (califFinalFija!==null) return califFinalFija; return Math.round(TEMAS.reduce((a,t)=>a+calTema(t.id),0)/TEMAS.length*10)/10; }
+function abrirResumen(){
+  vista("vResumen");
+  if (!folio) folio = "CAW-5AV-" + Date.now().toString(36).toUpperCase();
+  $("rNombre").textContent = `${alumno.nombre} · No. de control ${alumno.control}`;
+  $("rCalif").textContent = califFinal().toFixed(1);
+  $("rTabla").innerHTML = TEMAS.map((t,i)=>`<tr><td>${i+1}</td><td>${t.titulo}</td><td>${prog[t.id]?.primer??"-"} / 5</td><td>${prog[t.id]?.puntos??"-"} / 50</td><td><b>${calTema(t.id).toFixed(1)}</b></td></tr>`).join("");
+  $("btnEnviar").classList.toggle("hidden", enviado);
+  $("btnConstancia").classList.toggle("hidden", !enviado);
+}
+function mostrarYaEnviado(d){
+  alumno = {nombre:d.nombre, control:d.control, grupo:"5AV"}; enviado = true; folio = d.folio; califFinalFija = Number(d.calificacion);
+  prog = {}; TEMAS.forEach((t,i)=>{ prog[t.id] = {puntos: Number(d.temas?.[i]?.puntos ?? 0), primer: Number(d.temas?.[i]?.primer ?? 0), hecho:true}; });
+  abrirResumen();
+  $("estadoEnvio").className = "msg info"; $("estadoEnvio").textContent = "Ya habías enviado tus resultados. Puedes volver a descargar tu constancia.";
+  $("volver2").classList.add("hidden");
+}
+$("btnEnviar").onclick = async () => {
+  if (enviado) return;
+  const est = $("estadoEnvio");
+  $("btnEnviar").disabled = true; $("btnEnviar").textContent = "Enviando…";
+  const datos = { token, folio, control: alumno.control, materia: MATERIA, actividad: ACTIVIDAD,
+    temas: TEMAS.map(t => ({ id:t.id, titulo:t.titulo, puntos: prog[t.id].puntos, primer: prog[t.id].primer, sin: prog[t.id].sin||0, calif: calTema(t.id) })),
+    calificacion: califFinal(), puntos: puntosTot(), puntosMax: TEMAS.length*50,
+    minutos: Math.round((Date.now()-(inicio||Date.now()))/60000) };
+  try{
+    const r = await (await fetch(SCRIPT_URL, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(datos)})).json();
+    if (!r.ok) throw new Error(r.error);
+    enviado = true;
+    if (r.repetido){ folio = r.folio; califFinalFija = Number(r.calificacion); $("rCalif").textContent = califFinalFija.toFixed(1);
+      est.className = "msg bad"; est.textContent = "Ya habías enviado antes; se conserva tu primer resultado.";
+    } else { est.className = "msg ok"; est.textContent = "✅ Resultados enviados al docente. Ya puedes descargar tu constancia."; }
+    $("btnEnviar").classList.add("hidden"); $("btnConstancia").classList.remove("hidden");
+  }catch(err){
+    est.className = "msg bad";
+    const ses = /vencida|válida/.test(err.message);
+    est.textContent = ses ? "Tu sesión de Google venció. Inicia sesión otra vez con el botón de abajo y se enviará automáticamente."
+                          : "No se pudo enviar ("+err.message+"). Revisa tu conexión e inténtalo de nuevo.";
+    $("btnEnviar").disabled = false; $("btnEnviar").textContent = "📤 Enviar resultados al docente";
+    if (ses){ $("reLogin").classList.remove("hidden"); google.accounts.id.renderButton($("reLogin"), {theme:"filled_blue", size:"large", text:"signin_with", locale:"es"}); }
+  }
+};
+
+$("btnConstancia").onclick = () => {
+  const cv = $("lienzo"), x = cv.getContext("2d"), W = cv.width, H = cv.height;
+  x.fillStyle = "#fffdfb"; x.fillRect(0,0,W,H);
+  x.strokeStyle = "#7a1f3d"; x.lineWidth = 18; x.strokeRect(30,30,W-60,H-60);
+  x.strokeStyle = "#c9a227"; x.lineWidth = 4; x.strokeRect(60,60,W-120,H-120);
+  x.textAlign = "center"; x.fillStyle = "#7a1f3d";
+  x.font = "bold 40px Georgia"; x.fillText("CENTRO DE BACHILLERATO TECNOLÓGICO", W/2, 160);
+  x.fillText("INDUSTRIAL Y DE SERVICIOS No. 187", W/2, 212);
+  x.font = "26px Georgia"; x.fillStyle = "#555"; x.fillText("Técnico en Programación · " + MATERIA, W/2, 262);
+  x.font = "bold 92px Georgia"; x.fillStyle = "#c9a227"; x.fillText("CONSTANCIA", W/2, 390);
+  x.fillStyle = "#333"; x.font = "34px Georgia"; x.fillText("Se otorga la presente a", W/2, 470);
+  x.fillStyle = "#7a1f3d"; let fs = 64; x.font = `bold ${fs}px Georgia`;
+  while (x.measureText(alumno.nombre).width > W-260 && fs > 30){ fs -= 2; x.font = `bold ${fs}px Georgia`; }
+  x.fillText(alumno.nombre, W/2, 565);
+  x.strokeStyle = "#c9a227"; x.lineWidth = 2; x.beginPath(); x.moveTo(300,590); x.lineTo(W-300,590); x.stroke();
+  x.fillStyle = "#333"; x.font = "32px Georgia";
+  x.fillText(`del grupo 5AV, No. de control ${alumno.control}, por concluir el`, W/2, 655);
+  x.font = "bold 34px Georgia"; x.fillText(`“${ACTIVIDAD}”`, W/2, 708);
+  x.font = "32px Georgia"; x.fillText(`con una calificación final de ${califFinal().toFixed(1)}. Resultados por tema:`, W/2, 760);
+  // tabla
+  const X = [130, 210, 1060, 1270, 1450], top = 820, rh = 74;
+  x.fillStyle = "#7a1f3d"; x.fillRect(110, top, W-220, rh);
+  x.fillStyle = "#fff"; x.font = "bold 28px Georgia"; x.textAlign = "left";
+  ["#","Tema","1er intento","Puntos","Calif."].forEach((h,i)=>x.fillText(h, X[i], top+48));
+  TEMAS.forEach((t,i)=>{
+    const y = top + rh*(i+1);
+    x.fillStyle = i%2 ? "#ffffff" : "#f6eef0"; x.fillRect(110, y, W-220, rh);
+    x.fillStyle = "#333"; x.font = "27px Georgia";
+    const p = prog[t.id] || {};
+    x.fillText(String(i+1), X[0], y+48);
+    x.fillText(`${t.titulo} (Act. ${t.n})`.slice(0,52), X[1], y+48);
+    x.fillText(`${p.primer ?? "-"} / 5`, X[2], y+48);
+    x.fillText(`${p.puntos ?? "-"} / 50`, X[3], y+48);
+    x.font = "bold 27px Georgia"; x.fillText(calTema(t.id).toFixed(1), X[4], y+48);
+  });
+  const yt = top + rh*11;
+  x.fillStyle = "#c9a227"; x.fillRect(110, yt, W-220, rh);
+  x.fillStyle = "#fff"; x.font = "bold 30px Georgia";
+  x.fillText("CALIFICACIÓN FINAL", X[1], yt+50); x.fillText(`${puntosTot()} / 500`, X[3], yt+50); x.fillText(califFinal().toFixed(1), X[4], yt+50);
+  x.textAlign = "center"; x.fillStyle = "#333";
+  const f = new Date().toLocaleDateString("es-MX",{day:"numeric",month:"long",year:"numeric"});
+  x.font = "28px Georgia"; x.fillText(`Tamazunchale, S.L.P., a ${f}.`, W/2, yt+170);
+  x.beginPath(); x.moveTo(W/2-280,yt+300); x.lineTo(W/2+280,yt+300); x.strokeStyle="#333"; x.lineWidth=2; x.stroke();
+  x.font = "bold 30px Georgia"; x.fillText(DOCENTE, W/2, yt+345);
+  x.font = "26px Georgia"; x.fillText("Docente", W/2, yt+383);
+  x.textAlign = "right"; x.font = "22px monospace"; x.fillStyle = "#888"; x.fillText("Folio: "+folio+" · "+correo, W-90, H-85);
+  const a = document.createElement("a");
+  a.download = `Constancia_Repaso_${alumno.nombre.replace(/\s+/g,"_")}.png`;
+  a.href = cv.toDataURL("image/png"); a.click();
+};
+
+window.addEventListener("load", () => {
+  const tryInit = () => {
+    if (!window.google || !google.accounts){ return setTimeout(tryInit, 200); }
+    google.accounts.id.initialize({client_id:CLIENT_ID, callback:alIniciarSesion, hd:DOMINIO});
+    google.accounts.id.renderButton($("btnGoogle"), {theme:"filled_blue", size:"large", text:"signin_with", locale:"es"});
+  };
+  tryInit();
+});
+</script>
+</body>
+</html>
